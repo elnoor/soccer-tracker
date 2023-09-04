@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "lib/seed.ts"
-  ],
+, "components/Button.js", "lib/utils.js"  ],
   "exclude": ["node_modules"]
 }

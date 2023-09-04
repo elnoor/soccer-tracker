@@ -2,9 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 
 export const metadata = {
-  title: 'Soccer Tracker',
-  description:
-    'A simple Next.js app with Vercel Postgres as the database and Prisma as the ORM built by Elnur to track soccer payments',
+  title: 'Soccer Tracker'
 }
 
 const inter = Inter({

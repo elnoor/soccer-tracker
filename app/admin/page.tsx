@@ -17,11 +17,17 @@ export default function Login() {
   }
 
   return (
-    <form action={create}>
-      <input type="password" name="password" placeholder="Password" required />
+    <form action={create} className="flex">
+      <input
+        type="password"
+        name="password"
+        className="px-4 py-2 text-gray-700 bg-white border rounded-md sm:mx-2 focus:border-teal-500 focus:outline-none focus:ring focus:ring-teal-200 focus:ring-opacity-40"
+        placeholder="Password"
+        required
+      />
       <button
         type="submit"
-        className="group rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-sm font-medium px-5 py-1 hover:shadow-lg active:shadow-sm transition-all"
+        className="bg-teal-600 hover:bg-teal-800 px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform rounded-md mx-2 focus:outline-none"
       >
         Enter
       </button>

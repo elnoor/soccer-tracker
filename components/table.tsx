@@ -25,7 +25,7 @@ export default async function Table() {
         <p className="space-y-1 text-sm text-gray-500">
           Fetched {players.length} players in {duration}ms
         </p>
-        <button className="group mt-20 sm:mt-0 rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-sm font-medium px-5 py-1 hover:shadow-lg active:shadow-sm transition-all">Admin</button>
+        <button className="group rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-sm font-medium px-5 py-1 hover:shadow-lg active:shadow-sm transition-all">Admin</button>
       </div>
       <div className="bg-white/30 p-4 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto">
         <div className="divide-y divide-gray-900/5">

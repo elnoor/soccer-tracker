@@ -18,7 +18,13 @@ export async function seed() {
   const players = await Promise.all([
     sql`
           INSERT INTO players (name, is_active, is_guest, email, phone)
-          VALUES ('Elnur M', true, false, 'elnoormobile@gmail.com', '123123123')
+          VALUES 
+          ('Elnur', true, false, 'elnoormobile@gmail.com', '11111'),
+          ('Elnar', true, false, 'elnoormobile+1@gmail.com', '22222'),
+          ('Kamran', true, false, 'elnoormobile+2@gmail.com', '3333333'),
+          ('Tural Q', true, false, 'elnoormobile+3@gmail.com', '4444444'),
+          ('Tural M', true, false, 'elnoormobile+4@gmail.com', '5555555'),
+          ('Riyad', true, false, 'elnoormobile+5@gmail.com', '6666666')
       `,
 
   ])

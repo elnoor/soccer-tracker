@@ -20,9 +20,6 @@ export default function Home() {
       <Suspense fallback={<TablePlaceholder />}>
         <Table />
       </Suspense>
-      <p className="font-light text-gray-600 w-full max-w-lg text-center mt-6">
-        Elnur was here
-      </p>
     </main>
   )
 }

@@ -37,11 +37,17 @@ export default async function Home() {
       </div>
       <div className="bg-white/30 p-4 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto">
         <div className="divide-y divide-gray-900/5">
-          {players.map((player) => (
+          {players.map((player, index) => (
             <div
               key={player.id}
               className="flex items-center justify-between py-3"
             >
+              <Link
+                href={`/${player.id}`}
+                className="text-sm text-gray-500"
+              >
+                {index++}
+              </Link>
               <div className="flex items-center space-x-4">
                 <div className="space-y-1">
                   <p className="font-medium leading-none">{player.name}</p>

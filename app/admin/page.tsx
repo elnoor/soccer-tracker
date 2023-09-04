@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { isAdmin } from "@/lib/utils.js";
 
-export default function AdminLogin() {
+export default function Login() {
   if (isAdmin()) {
     redirect("/admin/transactions");
   }

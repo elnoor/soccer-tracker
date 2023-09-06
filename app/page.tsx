@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { timeAgo } from "@/lib/utils.js";
+import { isAdmin, timeAgo } from "@/lib/utils.js";
 import { seed } from "@/lib/seed";
 import Link from "next/link";
 
@@ -35,32 +35,44 @@ export default async function Home() {
           Admin
         </Link>
       </div>
-      <div className="bg-white/30 p-4 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto">
+      <div className="bg-white/30 py-4 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto">
         <div className="divide-y divide-gray-900/5">
           {players.map((player, index) => (
             <div
               key={player.id}
-              className="flex items-center justify-between py-3"
+              className="flex items-center justify-between px-4 py-3 hover:bg-gray-200"
             >
-              <Link
-                href={`/${player.id}`}
-                className="text-sm text-gray-500"
-              >
-                {index++}
-              </Link>
-              <div className="flex items-center space-x-4">
-                <div className="space-y-1">
-                  <p className="font-medium leading-none">{player.name}</p>
-                  <p className="text-sm text-gray-500">{player.email}</p>
-                </div>
+              <div className="flex items-center space-x-4 leading-none">
+                <span className="text-sm text-gray-500">{index + 1}</span>
+                <span className="font-medium">{player.name}</span>
               </div>
-              <p className="text-sm text-gray-500">
-                {timeAgo(player.created_at)}
-              </p>
+              {isAdmin() && (
+                <Link
+                  href={`/${player.id}`}
+                  className="text-sm text-gray-500 hover:cursor-pointer"
+                >
+                  <BalanceBadge amount={-12.56} />
+                </Link>
+              )}
             </div>
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+function BalanceBadge({ amount }: { amount: number }) {
+  const isNegative = amount < 0;
+  return (
+    <div
+      className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
+        isNegative
+          ? "text-red-500 bg-red-100/60"
+          : "text-emerald-500 bg-emerald-100/60"
+      } `}
+    >
+      <h2 className="text-sm font-normal">{amount}</h2>
     </div>
   );
 }

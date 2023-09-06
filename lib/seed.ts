@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres'
 
 export async function seed() {
-  const createTable = await sql`
+  const createPlayersTable = await sql`
     CREATE TABLE IF NOT EXISTS players (
       id SERIAL PRIMARY KEY,
       name VARCHAR (255) UNIQUE NOT NULL,
@@ -12,10 +12,9 @@ export async function seed() {
       created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
     `
-
   console.log(`Created "players" table`)
 
-  const players = await Promise.all([
+  const playersInserted = await Promise.all([
     sql`
           INSERT INTO players (name, is_active, is_guest, email, phone)
           VALUES 
@@ -26,13 +25,49 @@ export async function seed() {
           ('Tural M', true, false, 'elnoormobile+4@gmail.com', '5555555'),
           ('Riyad', true, false, 'elnoormobile+5@gmail.com', '6666666')
       `,
-
   ])
+  console.log(`Seeded ${playersInserted.length} users`)
+  
+  const createTransactionsTable = await sql`
+    CREATE TABLE IF NOT EXISTS transactions (
+      id SERIAL PRIMARY KEY,
+      player_id INT NOT NULL,
+      amount DECIMAL NOT NULL DEFAULT 0,
+      note VARCHAR (1000),
+      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+    `
+  console.log(`Created "transactions" table`)
 
-  console.log(`Seeded ${players.length} users`)
+  const transactionsInserted = await Promise.all([
+    sql`
+          INSERT INTO transactions (player_id, amount, note)
+          VALUES 
+          (1, -12.95, 'game from thursday 24th sep'),
+          (1, 17.35, 'payment'),
+          (1, -5, 'new ball purchased'),
+          (2, 40, 'balance increased'),
+          (2, -12.95, 'game from thursday 24th sep'),
+          (2, 17.35, 'payment'),
+          (2, -5, 'new ball purchased'),
+          (3, -12.95, 'game from thursday 24th sep'),
+          (3, 17.35, 'payment'),
+          (3, -5, 'new ball purchased'),
+          (3, 40, 'balance increased'),
+          (4, -12.95, 'game from thursday 24th sep'),
+          (4, 17.35, 'payment'),
+          (4, 40, 'balance increased'),
+          (4, 17.35, 'payment'),
+          (4, -5, 'new ball purchased'),
+          (5, 40, 'balance increased')
+      `,
+  ])
+  console.log(`Seeded ${transactionsInserted.length} transactions`)
 
   return {
-    createTable,
-    players,
+    createPlayersTable,
+    playersInserted,
+    createTransactionsTable,
+    transactionsInserted
   }
 }

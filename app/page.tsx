@@ -1,19 +1,18 @@
 import { sql } from "@vercel/postgres";
-import { isAdmin, timeAgo } from "@/lib/utils.js";
 import { seed } from "@/lib/seed";
 import Link from "next/link";
 
 export default async function Home() {
   let data;
   let startTime = Date.now();
-
+  
   try {
-    data = await sql`SELECT * FROM players`;
+    data = await sql`SELECT p.id, p.name, SUM (t.amount) AS balance FROM players p LEFT JOIN transactions t ON p.id = t.player_id GROUP BY p.id ORDER by p.id`;
   } catch (e: any) {
     if (e.message.endsWith(`relation "players" does not exist`)) {
       await seed(); // Table is not created yet, then seed
       startTime = Date.now();
-      data = await sql`SELECT * FROM players`;
+      data = await sql`SELECT p.id, p.name, SUM (t.amount) AS balance FROM players p LEFT JOIN transactions t ON p.id = t.player_id GROUP BY p.id ORDER by p.id`;
     } else {
       throw e;
     }
@@ -46,14 +45,12 @@ export default async function Home() {
                 <span className="text-sm text-gray-500">{index + 1}</span>
                 <span className="font-medium">{player.name}</span>
               </div>
-              {isAdmin() && (
-                <Link
-                  href={`/${player.id}`}
-                  className="text-sm text-gray-500 hover:cursor-pointer"
-                >
-                  <BalanceBadge amount={-12.56} />
-                </Link>
-              )}
+              <Link
+                href={`/${player.id}`}
+                className="text-sm text-gray-500 hover:cursor-pointer"
+              >
+                <BalanceBadge amount={player.balance} />
+              </Link>
             </div>
           ))}
         </div>
@@ -72,7 +69,7 @@ function BalanceBadge({ amount }: { amount: number }) {
           : "text-emerald-500 bg-emerald-100/60"
       } `}
     >
-      <h2 className="text-sm font-normal">{amount}</h2>
+      <h2 className="text-sm font-normal">{amount || 0}</h2>
     </div>
   );
 }

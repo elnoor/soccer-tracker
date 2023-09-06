@@ -20,10 +20,10 @@ export async function seed() {
           VALUES 
           ('Elnur', true, false, 'elnoormobile@gmail.com', '11111'),
           ('Elnar', true, false, 'elnoormobile+1@gmail.com', '22222'),
-          ('Kamran', true, false, 'elnoormobile+2@gmail.com', '3333333'),
-          ('Tural Q', true, false, 'elnoormobile+3@gmail.com', '4444444'),
-          ('Tural M', true, false, 'elnoormobile+4@gmail.com', '5555555'),
-          ('Riyad', true, false, 'elnoormobile+5@gmail.com', '6666666')
+          ('Kamran', true, true, 'elnoormobile+2@gmail.com', '3333333'),
+          ('Tural Q', false, false, 'elnoormobile+3@gmail.com', '4444444'),
+          ('Tural M', true, true, 'elnoormobile+4@gmail.com', '5555555'),
+          ('Riyad', false, true, 'elnoormobile+5@gmail.com', '6666666')
       `,
   ])
   console.log(`Seeded ${playersInserted.length} users`)
@@ -43,23 +43,23 @@ export async function seed() {
     sql`
           INSERT INTO transactions (player_id, amount, note)
           VALUES 
-          (1, -12.95, 'game from thursday 24th sep'),
-          (1, 17.35, 'payment'),
-          (1, -5, 'new ball purchased'),
-          (2, 40, 'balance increased'),
-          (2, -12.95, 'game from thursday 24th sep'),
-          (2, 17.35, 'payment'),
-          (2, -5, 'new ball purchased'),
-          (3, -12.95, 'game from thursday 24th sep'),
-          (3, 17.35, 'payment'),
-          (3, -5, 'new ball purchased'),
-          (3, 40, 'balance increased'),
-          (4, -12.95, 'game from thursday 24th sep'),
-          (4, 17.35, 'payment'),
-          (4, 40, 'balance increased'),
-          (4, 17.35, 'payment'),
-          (4, -5, 'new ball purchased'),
-          (5, 40, 'balance increased')
+          (1, -12.95, 'test - game from thursday 24th sep'),
+          (1, 17.35, 'test - payment'),
+          (1, -5, 'test - new ball purchased'),
+          (2, 40, 'test - balance increased'),
+          (2, -12.95, 'test - game from thursday 24th sep'),
+          (2, 17.35, 'test - payment'),
+          (2, -5, 'test - new ball purchased'),
+          (3, -12.95, 'test - game from thursday 24th sep'),
+          (3, 17.35, 'test - payment'),
+          (3, -5, 'test - new ball purchased'),
+          (3, 40, 'test - balance increased'),
+          (4, -12.95, 'test - game from thursday 24th sep'),
+          (4, 17.35, 'test - payment'),
+          (4, 40, 'test - balance increased'),
+          (4, 17.35, 'test - payment'),
+          (4, -5, 'test - new ball purchased'),
+          (5, 40, 'test - balance increased')
       `,
   ])
   console.log(`Seeded ${transactionsInserted.length} transactions`)

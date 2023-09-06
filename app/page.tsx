@@ -1,31 +1,21 @@
-import { sql } from "@vercel/postgres";
 import { seed } from "@/lib/seed";
+import { sql } from "@vercel/postgres";
 import Link from "next/link";
 
 export default async function Home() {
-  let data;
   let startTime = Date.now();
-  
-  try {
-    data = await sql`SELECT p.id, p.name, SUM (t.amount) AS balance FROM players p LEFT JOIN transactions t ON p.id = t.player_id GROUP BY p.id ORDER by p.id`;
-  } catch (e: any) {
-    if (e.message.endsWith(`relation "players" does not exist`)) {
-      await seed(); // Table is not created yet, then seed
-      startTime = Date.now();
-      data = await sql`SELECT p.id, p.name, SUM (t.amount) AS balance FROM players p LEFT JOIN transactions t ON p.id = t.player_id GROUP BY p.id ORDER by p.id`;
-    } else {
-      throw e;
-    }
-  }
+  // await seed(); // drop tables to recreate and seed
+  let data =
+    await sql`SELECT p.id, p.name, p.is_active, p.is_guest, SUM (t.amount) AS balance FROM players p LEFT JOIN transactions t ON p.id = t.player_id GROUP BY p.id ORDER by p.id`;
 
-  const players = data.rows;
+  const { rows } = data;
   const duration = Date.now() - startTime;
 
   return (
     <div className="w-full px-2">
       <div className="flex justify-between max-w-xl mx-auto py-2">
         <p className="space-y-1 text-sm text-gray-500">
-          Fetched {players.length} players in {duration}ms
+          Fetched {rows.length} players in {duration}ms
         </p>
         <Link
           href="/admin"
@@ -36,22 +26,25 @@ export default async function Home() {
       </div>
       <div className="bg-white/30 py-4 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto">
         <div className="divide-y divide-gray-900/5">
-          {players.map((player, index) => (
-            <div
+          {rows.map((player, index) => (
+            <Link
               key={player.id}
-              className="flex items-center justify-between px-4 py-3 hover:bg-gray-200"
+              href={`/${player.id}`}
+              className={`${
+                !player.is_active && "opacity-30"
+              } flex items-center justify-between px-4 py-3 hover:bg-gray-200 hover:cursor-pointer`}
             >
               <div className="flex items-center space-x-4 leading-none">
                 <span className="text-sm text-gray-500">{index + 1}</span>
                 <span className="font-medium">{player.name}</span>
+                {player.is_guest && (
+                  <span className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-200 rounded-full gap-x-1">
+                    Guest
+                  </span>
+                )}
               </div>
-              <Link
-                href={`/${player.id}`}
-                className="text-sm text-gray-500 hover:cursor-pointer"
-              >
-                <BalanceBadge amount={player.balance} />
-              </Link>
-            </div>
+              <BalanceBadge amount={player.balance} />
+            </Link>
           ))}
         </div>
       </div>
@@ -65,8 +58,8 @@ function BalanceBadge({ amount }: { amount: number }) {
     <div
       className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
         isNegative
-          ? "text-red-500 bg-red-100/60"
-          : "text-emerald-500 bg-emerald-100/60"
+          ? "text-red-600 bg-red-100/60"
+          : "text-emerald-600 bg-emerald-100/60"
       } `}
     >
       <h2 className="text-sm font-normal">{amount || 0}</h2>

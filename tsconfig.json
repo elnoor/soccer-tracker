@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "lib/seed.ts"
-, "components/Button.js", "lib/utils.js"  ],
+, "components/Button.js", "lib/utils.js", "app/[player_id]/page.jsx"  ],
   "exclude": ["node_modules"]
 }

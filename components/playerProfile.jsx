@@ -5,7 +5,7 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import { timeAgo } from "@/lib/utils";
 
-export default function PlayerProfile({ player }) {
+export default function PlayerProfile({ player, isAdmin }) {
   const [disabled, setDisabled] = useState(true);
 
   return (
@@ -41,21 +41,25 @@ export default function PlayerProfile({ player }) {
         value={player.email}
         disabled={disabled}
       />
-      {disabled ? (
-        <Button secondary onClick={() => setDisabled(false)}>
-          Edit
-        </Button>
-      ) : (
-        <div className="flex gap-2">
-          <Button
-            secondary
-            className="w-full"
-            onClick={() => setDisabled(true)}
-          >
-            Cancel
-          </Button>
-          <Button className="md:order-first w-full">Save</Button>
-        </div>
+      {isAdmin && (
+        <>
+          {disabled ? (
+            <Button secondary onClick={() => setDisabled(false)}>
+              Edit
+            </Button>
+          ) : (
+            <div className="flex gap-2">
+              <Button
+                secondary
+                className="w-full"
+                onClick={() => setDisabled(true)}
+              >
+                Cancel
+              </Button>
+              <Button className="md:order-first w-full">Save</Button>
+            </div>
+          )}
+        </>
       )}
     </form>
   );

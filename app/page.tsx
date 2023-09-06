@@ -1,5 +1,6 @@
 import { seed } from "@/lib/seed";
 import { sql } from "@vercel/postgres";
+import LinkButton from "@/components/linkButton";
 import Link from "next/link";
 
 export default async function Home() {
@@ -17,12 +18,9 @@ export default async function Home() {
         <p className="space-y-1 text-sm text-gray-500">
           Fetched {rows.length} players in {duration}ms
         </p>
-        <Link
-          href="/admin"
-          className="group rounded-full flex space-x-1 bg-white/30 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-sm font-medium px-5 py-1 hover:shadow-lg active:shadow-sm transition-all"
-        >
+        <LinkButton href="/admin" secondary className="text-sm !py-1">
           Admin
-        </Link>
+        </LinkButton>
       </div>
       <div className="bg-white/30 py-4 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto">
         <div className="divide-y divide-gray-900/5">

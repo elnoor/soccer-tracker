@@ -1,9 +1,10 @@
 import { sql } from "@vercel/postgres";
 import { notFound } from "next/navigation";
 import PlayerProfile from "@/components/playerProfile";
-import { isAdmin } from "@/lib/auth";
+import { isAdmin } from "../auth/actions";
 
 export default async function Player({ params }) {
+  const _isAdmin = await isAdmin();
   let data = await sql`SELECT * FROM players WHERE id=${Number(
     params.player_id
   )}`;
@@ -11,5 +12,5 @@ export default async function Player({ params }) {
 
   if (!player) notFound();
 
-  return <PlayerProfile player={player} isAdmin={isAdmin()} />;
+  return <PlayerProfile player={player} isAdmin={_isAdmin} />;
 }

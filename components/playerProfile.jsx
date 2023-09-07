@@ -9,7 +9,7 @@ export default function PlayerProfile({ player, isAdmin }) {
   const [disabled, setDisabled] = useState(true);
 
   return (
-    <form className="flex flex-col md:flex-row md:items-center text-center gap-2 md:gap-0 w-full md:w-auto px-3">
+    <form className="flex flex-col md:flex-row md:items-center text-center gap-2 w-full md:w-auto px-3">
       <p className="text-sm text-gray-500">
         Created{" "}
         <span

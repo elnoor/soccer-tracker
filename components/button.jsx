@@ -1,5 +1,5 @@
 export default function Button({
-  onClick = null,
+  onClick,
   children,
   type = "button",
   className = "",

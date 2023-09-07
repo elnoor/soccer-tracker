@@ -1,11 +1,9 @@
-import { seed } from "@/lib/seed";
 import { sql } from "@vercel/postgres";
 import LinkButton from "@/components/linkButton";
 import Link from "next/link";
 
 export default async function Home() {
   let startTime = Date.now();
-  // await seed(); // drop tables to recreate and seed
   let data =
     await sql`SELECT p.id, p.name, p.is_active, p.is_guest, SUM (t.amount) AS balance FROM players p LEFT JOIN transactions t ON p.id = t.player_id GROUP BY p.id ORDER by p.id`;
 

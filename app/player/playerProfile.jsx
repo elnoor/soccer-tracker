@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Button from "@/components/button";
 import Input from "@/components/input";
+import CheckBox from "@/components/checkbox";
 import { createPlayer, updatePlayer, deletePlayer } from "./actions";
 import { useRouter } from "next/navigation";
 
@@ -16,8 +17,9 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
   const [loading, setLoading] = useState(false);
 
   function onChange(e) {
-    const { name, value } = e.target;
-    setPlayerData({ ...playerData, [name]: value });
+    const { name, value, checked, type } = e.target;
+    const val = type === "checkbox" ? checked : value;
+    setPlayerData({ ...playerData, [name]: val });
   }
 
   function onCancel() {
@@ -76,6 +78,28 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
         required={true}
         disabled={disabled}
       />
+
+      <div className="flex gap-3">
+        <CheckBox
+          name="is_active"
+          checked={playerData.is_active}
+          onChange={onChange}
+          className="flex-1 justify-center"
+          disabled={disabled}
+        >
+          Active
+        </CheckBox>
+        <CheckBox
+          name="is_guest"
+          checked={playerData.is_guest}
+          onChange={onChange}
+          className="flex-1 justify-center"
+          disabled={disabled}
+        >
+          Guest
+        </CheckBox>
+      </div>
+
       {isAdmin && (
         <div className="flex gap-2">
           {disabled ? (

@@ -25,7 +25,7 @@ export default async function Home() {
           {rows.map((player, index) => (
             <Link
               key={player.id}
-              href={`/${player.id}`}
+              href={`/player/${player.id}`}
               className={`${
                 !player.is_active && "opacity-30"
               } flex items-center justify-between px-4 py-3 hover:bg-gray-200 hover:cursor-pointer`}

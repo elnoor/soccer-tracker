@@ -23,7 +23,7 @@ export default async function Login() {
         required={true}
         className="bg-white text-gray-700 border focus:border-teal-500 rounded-full px-4 py-2 focus:outline-none focus:ring focus:ring-teal-200 focus:ring-opacity-40"
       />
-      <Button type="submit" onClick={undefined}>
+      <Button type="submit">
         Enter
       </Button>
     </form>

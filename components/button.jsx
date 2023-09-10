@@ -1,14 +1,12 @@
 export default function Button({
-  onClick,
   children,
-  type = "button",
   className = "",
   secondary = false,
+  ...rest
 }) {
   return (
     <button
-      onClick={onClick}
-      type={type}
+      {...rest}
       className={`rounded-full shadow-sm hover:shadow-lg font-medium hover:cursor-pointer transition-all duration-300 focus:outline-none px-4 py-2 ${
         secondary
           ? "bg-white/30 text-gray-600 ring-1 ring-gray-900/5"

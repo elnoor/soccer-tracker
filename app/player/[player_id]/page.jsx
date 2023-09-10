@@ -1,7 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { notFound } from "next/navigation";
-import { isAdmin } from "../auth/actions";
-import PlayerProfile from "./playerProfile";
+import { isAdmin } from "../../auth/actions";
+import PlayerProfile from "../playerProfile";
 
 export default async function Player({ params }) {
   const playerId = Number(params.player_id);
@@ -29,7 +29,7 @@ export default async function Player({ params }) {
 
 function Transactions({ transactions }) {
   if (!transactions || transactions.length === 0) {
-    return <p>No transactions found</p>;
+    return <p className="text-center mt-10">No transactions found</p>;
   }
 
   return (

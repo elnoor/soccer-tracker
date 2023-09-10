@@ -3,8 +3,7 @@
 import { useState } from "react";
 import Button from "@/components/button";
 import Input from "@/components/input";
-import { timeAgo } from "@/lib/utils";
-import { createPlayer, updatePlayer } from "./actions";
+import { createPlayer, updatePlayer, deletePlayer } from "./actions";
 import { useRouter } from "next/navigation";
 
 /**
@@ -38,18 +37,19 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
     setLoading(false);
   }
 
+  async function onDelete() {
+    if (confirm(`Are you sure to delete player "${player.name}" ?`)) {
+      await deletePlayer(player.id);
+      router.replace("/"); // redirect() doesn't work here for some reason, probably Nextjs bug, use router.replace() instead
+    }
+  }
+
   return (
     <div className="flex flex-col md:flex-row md:items-center text-center gap-2 w-full md:w-auto">
       {playerData.created_at && (
-        <p className="text-sm text-gray-500">
-          Created{" "}
-          <span
-            title={playerData.created_at.toLocaleString()}
-            className="hover:cursor-pointer underline"
-          >
-            {timeAgo(playerData.created_at, false)}
-          </span>
-          .
+        <p className="text-xs text-gray-500 text-left">
+          Created on <br />
+          {playerData.created_at.toLocaleDateString()}
         </p>
       )}
       <Input
@@ -77,28 +77,39 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
         disabled={disabled}
       />
       {isAdmin && (
-        <>
+        <div className="flex gap-2">
           {disabled ? (
-            <Button secondary onClick={() => setDisabled(false)}>
-              Edit
-            </Button>
+            <>
+              <Button
+                secondary
+                className="w-full"
+                onClick={() => setDisabled(false)}
+              >
+                Edit
+              </Button>
+              {!isNew && (
+                <Button secondary className="w-full" onClick={onDelete}>
+                  Delete
+                </Button>
+              )}
+            </>
           ) : (
             <>
               {loading ? (
                 <span>Loading...</span>
               ) : (
-                <div className="flex gap-2">
+                <>
                   <Button secondary className="w-full" onClick={onCancel}>
                     Cancel
                   </Button>
-                  <Button onClick={onSave} className="md:order-first w-full">
+                  <Button onClick={onSave} className="w-full md:order-first">
                     Save
                   </Button>
-                </div>
+                </>
               )}
             </>
           )}
-        </>
+        </div>
       )}
     </div>
   );

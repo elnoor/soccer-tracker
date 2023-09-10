@@ -21,3 +21,7 @@ export async function updatePlayer(player) {
               is_guest = ${player.is_guest}
             WHERE id=${player.id}`;
 }
+
+export async function deletePlayer(playerId) {
+  await sql`DELETE FROM players WHERE id=${playerId}`;
+}

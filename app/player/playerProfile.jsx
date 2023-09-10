@@ -39,7 +39,7 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center text-center gap-2 w-full md:w-auto px-3">
+    <div className="flex flex-col md:flex-row md:items-center text-center gap-2 w-full md:w-auto">
       {playerData.created_at && (
         <p className="text-sm text-gray-500">
           Created{" "}

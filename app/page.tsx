@@ -11,7 +11,7 @@ export default async function Home() {
       FROM players p 
       LEFT JOIN transactions t ON p.id = t.player_id 
       GROUP BY p.id 
-      ORDER by p.id
+      ORDER BY p.is_active DESC, p.id ASC
     `;
 
   const { rows } = data;

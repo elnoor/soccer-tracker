@@ -1,7 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { notFound } from "next/navigation";
 import { isAdmin } from "../../auth/actions";
-import PlayerProfile from "../playerProfile";
 
 export default async function Player({ params }) {
   const playerId = Number(params.player_id);
@@ -21,7 +20,6 @@ export default async function Player({ params }) {
 
   return (
     <div className="w-full md:w-auto flex flex-col">
-      <PlayerProfile player={player} isAdmin={_isAdmin} />
       <Transactions transactions={transactions} />
     </div>
   );

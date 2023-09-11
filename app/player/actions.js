@@ -8,7 +8,7 @@ export async function createPlayer(player) {
             VALUES (${player.name}, ${player.email}, ${player.phone}, ${player.is_active}, ${player.is_guest})
             RETURNING id`;
 
-  return result.rows[0].id;
+  return result.rows[0].id; // return newly created record's id
 }
 
 export async function updatePlayer(player) {

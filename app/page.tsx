@@ -1,13 +1,15 @@
 import { sql } from "@vercel/postgres";
 import LinkButton from "@/components/linkButton";
+import PlayerEditButton from "@/components/playerEditButton";
 import Link from "next/link";
 import { isAdmin } from "./auth/actions";
 import LogOutButton from "./auth/logOutButton";
+import Button from "@/components/button";
 
 export default async function Home() {
   let startTime = Date.now();
   let data = await sql`
-      SELECT p.id, p.name, p.is_active, p.is_guest, SUM (t.amount) AS balance 
+      SELECT p.*, SUM (t.amount) AS balance 
       FROM players p 
       LEFT JOIN transactions t ON p.id = t.player_id 
       GROUP BY p.id 
@@ -17,30 +19,43 @@ export default async function Home() {
   const { rows } = data;
   const duration = Date.now() - startTime;
 
+  const _isAdmin = await isAdmin();
+
   return (
     <div className="w-full max-w-xl">
-      <TopBar duration={duration} rowCount={rows.length} />
-      <div className="bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg">
+      <TopBar duration={duration} rowCount={rows.length} isAdmin={_isAdmin} />
+      <div className="bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg">
         <div className="divide-y divide-gray-900/5">
           {rows.map((player, index) => (
-            <Link
-              key={player.id}
-              href={`/player/${player.id}`}
-              className={`${
-                !player.is_active && "opacity-30"
-              } flex items-center justify-between px-4 py-3 hover:bg-gray-200 hover:cursor-pointer`}
-            >
-              <div className="flex items-center space-x-4 leading-none">
-                <span className="text-sm text-gray-500">{index + 1}</span>
-                <span className="font-medium">{player.name}</span>
-                {player.is_guest && (
-                  <span className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-200 rounded-full gap-x-1">
-                    Guest
-                  </span>
-                )}
-              </div>
-              <BalanceBadge amount={player.balance} />
-            </Link>
+            <div className="flex px-4 py-3 hover:bg-gray-200 hover:cursor-pointer gap-3">
+              <Link
+                key={player.id}
+                href={`/player/${player.id}`}
+                className={`${
+                  !player.is_active && "opacity-30"
+                } w-full flex items-center justify-between`}
+              >
+                <div className="flex items-center space-x-4 leading-none">
+                  <span className="text-sm text-gray-500">{index + 1}</span>
+                  <span className="font-medium">{player.name}</span>
+                  {player.is_guest && (
+                    <span className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-200 rounded-full gap-x-1">
+                      Guest
+                    </span>
+                  )}
+                </div>
+                <BalanceBadge amount={player.balance} />
+              </Link>
+              {_isAdmin && (
+                <PlayerEditButton
+                  player={player}
+                  isNew={false}
+                  className="text-gray-500 hover:text-black font-bold text-xl px-2 -mr-2"
+                >
+                  ⋮
+                </PlayerEditButton>
+              )}
+            </div>
           ))}
         </div>
       </div>
@@ -51,22 +66,34 @@ export default async function Home() {
 async function TopBar({
   rowCount,
   duration,
+  isAdmin,
 }: {
   rowCount: number;
   duration: number;
+  isAdmin: any;
 }) {
-  const _isAdmin = await isAdmin();
-
   return (
-    <div className="flex items-end justify-between py-2">
-      {_isAdmin ? (
+    <div className="flex items-center justify-between py-2">
+      {isAdmin ? (
         <>
           <LinkButton href="/game" secondary className="text-sm !py-1">
             New Game
           </LinkButton>
-          <LinkButton href="/player" secondary className="text-sm !py-1">
-            New Player
-          </LinkButton>
+          <PlayerEditButton
+            player={{
+              name: "",
+              email: "",
+              phone: "",
+              is_guest: true,
+              is_active: true,
+            }}
+            isNew={true}
+            className=""
+          >
+            <Button secondary className="text-sm !py-1">
+              New Player
+            </Button>
+          </PlayerEditButton>
           <LogOutButton />
         </>
       ) : (

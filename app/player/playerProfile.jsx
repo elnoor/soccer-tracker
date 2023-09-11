@@ -47,7 +47,7 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center text-center gap-2 w-full md:w-auto">
+    <div className="flex flex-col md:flex-row md:items-center text-center gap-2">
       {playerData.created_at && (
         <p className="text-xs text-gray-500 text-center">
           Created on <br />
@@ -62,23 +62,26 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
         required={true}
         disabled={disabled}
       />
-      {
-        isAdmin && <><Input
-        name="phone"
-        value={playerData.phone}
-        onChange={onChange}
-        placeholder="Phone"
-        required={true}
-        disabled={disabled}
-      />
-      <Input
-        name="email"
-        value={playerData.email}
-        onChange={onChange}
-        placeholder="Email"
-        required={true}
-        disabled={disabled}
-      /></>}
+      {isAdmin && (
+        <>
+          <Input
+            name="phone"
+            value={playerData.phone}
+            onChange={onChange}
+            placeholder="Phone"
+            required={true}
+            disabled={disabled}
+          />
+          <Input
+            name="email"
+            value={playerData.email}
+            onChange={onChange}
+            placeholder="Email"
+            required={true}
+            disabled={disabled}
+          />
+        </>
+      )}
 
       <div className="flex gap-3">
         <CheckBox

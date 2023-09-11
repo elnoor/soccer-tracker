@@ -18,9 +18,9 @@ export default async function Home() {
   const duration = Date.now() - startTime;
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full max-w-xl">
       <TopBar duration={duration} rowCount={rows.length} />
-      <div className="bg-white/30 py-4 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto">
+      <div className="bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg">
         <div className="divide-y divide-gray-900/5">
           {rows.map((player, index) => (
             <Link
@@ -58,7 +58,7 @@ async function TopBar({
   const _isAdmin = await isAdmin();
 
   return (
-    <div className="flex justify-between max-w-xl mx-auto py-2">
+    <div className="flex justify-between py-2 mb-1">
       {_isAdmin ? (
         <>
           <LinkButton href="/game" secondary className="text-sm !py-1">

@@ -18,11 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>
-        <main className="relative flex min-h-screen flex-col items-center justify-center">
-          <h4 className="pt-4 pb-8 bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text text-center font-medium tracking-tight text-transparent text-4xl">
-            Soccer Tracker
-          </h4>
+      <body className={`${inter.variable} min-h-screen`}>
+        <h4 className="pt-3 pb-4 bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text text-center font-medium tracking-tight text-transparent text-3xl">
+          Soccer Tracker
+        </h4>
+        <main className="mx-auto p-2 flex flex-col items-center justify-center">
           {children}
         </main>
       </body>

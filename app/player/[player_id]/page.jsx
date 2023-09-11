@@ -20,7 +20,7 @@ export default async function Player({ params }) {
   const _isAdmin = await isAdmin();
 
   return (
-    <div className="max-w-full px-2">
+    <div className="w-full md:w-auto flex flex-col">
       <PlayerProfile player={player} isAdmin={_isAdmin} />
       <Transactions transactions={transactions} />
     </div>
@@ -33,7 +33,7 @@ function Transactions({ transactions }) {
   }
 
   return (
-    <table className="bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg w-full mt-10">
+    <table className="mt-10 bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg">
       <thead className="bg-gray-200">
         <tr className="text-gray-500 text-left">
           <th className="p-1 pl-3">Id</th>

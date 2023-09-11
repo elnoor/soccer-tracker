@@ -33,7 +33,7 @@ function Transactions({ transactions }) {
   }
 
   return (
-    <table className="mt-10 bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg">
+    <table className="mt-10 bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg overflow-hidden">
       <thead className="bg-gray-200">
         <tr className="text-gray-500 text-left">
           <th className="p-1 pl-3">Id</th>

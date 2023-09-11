@@ -20,7 +20,7 @@ export default async function Player({ params }) {
   const _isAdmin = await isAdmin();
 
   return (
-    <div className="w-full px-2">
+    <div className="max-w-full px-2">
       <PlayerProfile player={player} isAdmin={_isAdmin} />
       <Transactions transactions={transactions} />
     </div>

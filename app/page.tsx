@@ -58,7 +58,7 @@ async function TopBar({
   const _isAdmin = await isAdmin();
 
   return (
-    <div className="flex justify-between py-2 mb-1">
+    <div className="flex items-end justify-between py-2">
       {_isAdmin ? (
         <>
           <LinkButton href="/game" secondary className="text-sm !py-1">

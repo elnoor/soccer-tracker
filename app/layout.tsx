@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} min-h-screen`}>
         <Link href="/">
-          <h4 className="pt-3 pb-4 bg-gradient-to-br from-black via-[#3E3E3E] to-[#7D7D7D] bg-clip-text text-center font-medium tracking-tight text-transparent text-3xl">
+          <h4 className="pt-2 pb-4 bg-gradient-to-br from-black via-[#3E3E3E] to-[#7D7D7D] bg-clip-text text-center font-medium tracking-tight text-transparent text-3xl">
             Soccer Tracker
           </h4>
         </Link>

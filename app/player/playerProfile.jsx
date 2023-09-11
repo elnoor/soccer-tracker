@@ -40,9 +40,14 @@ export default function PlayerProfile({ player, isAdmin, isNew }) {
   }
 
   async function onDelete() {
-    if (confirm(`Are you sure to delete player "${player.name}" ?`)) {
+    const playerName = prompt(
+      `If you are sure to delete, type name "${player.name}" below to confirm:`
+    );
+    if (playerName === player.name) {
       await deletePlayer(player.id);
       router.replace("/"); // redirect() doesn't work here for some reason, probably Nextjs bug, use router.replace() instead
+    } else if (playerName) {
+      alert("Entered named didn't match player's name!");
     }
   }
 

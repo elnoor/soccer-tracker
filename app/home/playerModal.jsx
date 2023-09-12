@@ -1,11 +1,11 @@
 "use client";
 
-import Modal from "../components/modal";
+import Modal from "../../components/modal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Input from "../components/input";
-import CheckBox from "../components/checkbox";
-import Button from "../components/button";
+import Input from "../../components/input";
+import CheckBox from "../../components/checkbox";
+import Button from "../../components/button";
 import { createPlayer, deletePlayer, updatePlayer } from "./actions";
 
 export default function PlayerModalButton({

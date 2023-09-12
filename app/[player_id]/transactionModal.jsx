@@ -101,7 +101,7 @@ export default function TransactionModal({
               onChange={onChange}
               placeholder="Date"
               required={true}
-              className="col-span-2 md:col-span-1"
+              className="col-span-1"
             />
             <Input
               name="amount"
@@ -109,7 +109,7 @@ export default function TransactionModal({
               onChange={onChange}
               placeholder="Amount"
               required={true}
-              className={`col-span-2 md:col-span-1 ${
+              className={`col-span-1 ${
                 transactionData.amount < 0
                   ? "!bg-red-100/60"
                   : "!bg-emerald-100/60"
@@ -120,7 +120,7 @@ export default function TransactionModal({
               value={transactionData.note}
               onChange={onChange}
               placeholder="Note"
-              rows={4}
+              rows={5}
               required={true}
               className="col-span-2"
             />

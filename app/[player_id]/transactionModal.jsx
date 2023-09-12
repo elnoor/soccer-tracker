@@ -17,12 +17,19 @@ export default function TransactionModal({
   isNew,
   children,
   className,
+  allowClick = true,
 }) {
   const [transactionData, setTransactionData] = useState({
     ...transaction,
   });
   const [open, setOpen] = useState(false);
   const router = useRouter();
+
+  function onClick() {
+    if (allowClick) {
+      setOpen(true);
+    }
+  }
 
   function onChange(e) {
     const { name, value, checked, type } = e.target;
@@ -58,11 +65,11 @@ export default function TransactionModal({
   return (
     <>
       {isNew ? (
-        <div onClick={() => setOpen(true)} className={className}>
+        <div onClick={onClick} className={className}>
           {children}
         </div>
       ) : (
-        <tr onClick={() => setOpen(true)} className={className}>
+        <tr onClick={onClick} className={className}>
           {children}
         </tr>
       )}

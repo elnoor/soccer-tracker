@@ -9,7 +9,10 @@ const cookieName = "admin_password";
  */
 export async function isAdmin() {
   let password = cookies().get(cookieName);
-  return password?.value && process.env.ADMIN_PASSWORD === password?.value;
+  if (password && password.value) {
+    return process.env.ADMIN_PASSWORD === password.value;
+  }
+  return false;
 }
 
 /**

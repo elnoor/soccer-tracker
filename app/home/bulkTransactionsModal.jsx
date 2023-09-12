@@ -2,8 +2,9 @@
 
 import Modal from "../../components/modal";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Input from "../../components/input";
+import Select from "../../components/select";
 import TextArea from "../../components/textarea";
 import Button from "../../components/button";
 import { createBulkTransactions } from "./actions";
@@ -21,21 +22,23 @@ export default function BulkTransactionsModal({
   const [transactionData, setTransactionData] = useState({
     ...defaultTransactionData,
   });
-  const [selectedPlayers, setSelectedPlayers] = useState([]);
+  const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  function onChange(e) {
-    const { name, value, checked, type } = e.target;
-    const val =
-      type === "checkbox" ? checked : type === "date" ? new Date(value) : value;
-    setTransactionData({ ...transactionData, [name]: val });
-  }
+  const indexedPlayers = useMemo(() => {
+    return players.reduce((acc, cur) => {
+      if (cur.is_active) {
+        return { ...acc, [cur.id]: cur.name };
+      }
+      return acc;
+    }, {});
+  }, players);
 
-  function onPlayersSelect(e) {
-    const selectedOnes = Object.values(e.target.selectedOptions).map(
-      (opt) => opt.value
-    );
+  function onChange(e) {
+    const { name, value, type } = e.target;
+    const val = type === "date" ? new Date(value) : value;
+    setTransactionData({ ...transactionData, [name]: val });
   }
 
   function onCancel() {
@@ -46,7 +49,7 @@ export default function BulkTransactionsModal({
   }
 
   async function onSave() {
-    await createBulkTransactions(selectedPlayers, transactionData);
+    await createBulkTransactions(selectedPlayerIds, transactionData);
     onCancel();
     router.refresh();
   }
@@ -60,17 +63,19 @@ export default function BulkTransactionsModal({
       {open && (
         <Modal open={open} showCloseButton={false} onClose={onCancel}>
           <div className="grid grid-flow-row grid-cols-2 md:items-center text-center gap-2">
-            <select multiple onChange={onPlayersSelect} className="col-span-1">
-              {players
-                .filter((p) => p.is_active === true)
-                .map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-            </select>{" "}
-            <p className="text-xs text-gray-500 col-span-1">
-              {selectedPlayers.reduce((p) => p.name, "")}
+            <Select
+              multiple
+              onChange={(ids) => setSelectedPlayerIds(ids)}
+              className="col-span-2 md:col-span-1"
+            >
+              {Object.keys(indexedPlayers).map((id) => (
+                <option key={id} value={id}>
+                  {indexedPlayers[id]}
+                </option>
+              ))}
+            </Select>
+            <p className="text-sm text-gray-500 col-span-2 md:col-span-1">
+              {selectedPlayerIds.map((i) => indexedPlayers[i]).join(", ")}
             </p>
             <Input
               name="created_at"

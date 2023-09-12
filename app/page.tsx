@@ -27,9 +27,11 @@ export default async function Home() {
       <div className="bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg">
         <div className="divide-y divide-gray-900/5">
           {rows.map((player, index) => (
-            <div className="flex px-4 py-3 hover:bg-gray-200 hover:cursor-pointer gap-3">
+            <div
+              key={player.id}
+              className="flex px-4 py-3 hover:bg-gray-200 hover:cursor-pointer gap-3"
+            >
               <Link
-                key={player.id}
                 href={`/player/${player.id}`}
                 className={`${
                   !player.is_active && "opacity-30"

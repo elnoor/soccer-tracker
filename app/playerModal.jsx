@@ -8,7 +8,7 @@ import CheckBox from "../components/checkbox";
 import Button from "../components/button";
 import { createPlayer, deletePlayer, updatePlayer } from "./actions";
 
-export default function PlayerEditButton({
+export default function PlayerModalButton({
   player,
   isNew,
   children,

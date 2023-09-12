@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import LinkButton from "@/components/linkButton";
-import PlayerEditButton from "./playerModalButton";
+import PlayerModal from "./playerModal";
 import Link from "next/link";
 import { isAdmin } from "./auth/actions";
 import LogOutButton from "./auth/logOutButton";
@@ -49,13 +49,13 @@ export default async function Home() {
                 <BalanceBadge amount={player.balance} />
               </Link>
               {_isAdmin && (
-                <PlayerEditButton
+                <PlayerModal
                   player={player}
                   isNew={false}
                   className="text-gray-500 hover:text-black font-bold text-xl px-2 -mr-2"
                 >
                   ⋮
-                </PlayerEditButton>
+                </PlayerModal>
               )}
             </div>
           ))}
@@ -81,7 +81,7 @@ async function TopBar({
           <LinkButton href="/game" secondary className="text-sm !py-1">
             New Game
           </LinkButton>
-          <PlayerEditButton
+          <PlayerModal
             player={{
               name: "",
               email: "",
@@ -95,7 +95,7 @@ async function TopBar({
             <Button secondary className="text-sm !py-1">
               New Player
             </Button>
-          </PlayerEditButton>
+          </PlayerModal>
           <LogOutButton />
         </>
       ) : (

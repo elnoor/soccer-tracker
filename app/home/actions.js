@@ -25,3 +25,14 @@ export async function updatePlayer(player) {
 export async function deletePlayer(playerId) {
   await sql`DELETE FROM players WHERE id=${playerId}`;
 }
+
+export async function createBulkTransactions(players, transaction) {
+    // await sql`UPDATE players
+  //           SET
+  //             name = ${player.name},
+  //             email = ${player.email},
+  //             phone = ${player.phone},
+  //             is_active = ${player.is_active},
+  //             is_guest = ${player.is_guest}
+  //           WHERE id=${player.id}`;
+}

@@ -51,7 +51,7 @@ export default async function PlayerTransactions({ params }) {
         <table className="bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg overflow-hidden">
           <thead className="bg-gray-200">
             <tr className="text-gray-500 text-left">
-              <th className="font-medium p-1 pl-3">Id</th>
+              <th className="font-medium p-1 pl-3">#</th>
               <th className="font-medium p-1">Date</th>
               <th className="font-medium p-1">Amount</th>
               <th className="font-medium p-1 pr-3">Note</th>

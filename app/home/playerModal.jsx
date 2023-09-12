@@ -8,7 +8,12 @@ import CheckBox from "../../components/checkbox";
 import Button from "../../components/button";
 import { createPlayer, deletePlayer, updatePlayer } from "./actions";
 
-export default function PlayerModal({ player, isNew, children, className }) {
+export default function PlayerModal({
+  player,
+  isNew,
+  children,
+  className = "",
+}) {
   const [open, setOpen] = useState(false);
   const [playerData, setPlayerData] = useState({ ...player });
   const router = useRouter();
@@ -53,11 +58,7 @@ export default function PlayerModal({ player, isNew, children, className }) {
       </div>
 
       {open && (
-        <Modal
-          open={open}
-          showCloseButton={false}
-          onClose={() => setOpen(false)}
-        >
+        <Modal open={open} showCloseButton={false} onClose={onCancel}>
           {!isNew && (
             <div className="basis-full mb-3 flex items-center justify-between">
               <p className="text-xs text-gray-500">

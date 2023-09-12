@@ -6,86 +6,72 @@ import { useState } from "react";
 import Input from "../../components/input";
 import TextArea from "../../components/textarea";
 import Button from "../../components/button";
-import {
-  createTransaction,
-  deleteTransaction,
-  updateTransaction,
-} from "./actions";
+import { createBulkTransactions } from "./actions";
 
-export default function TransactionModal({
-  transaction,
-  isNew,
+export default function BulkTransactionsModal({
+  players,
   children,
   className = "",
-  allowClick = true,
 }) {
+  const defaultTransactionData = {
+    created_at: new Date(),
+    note: "",
+    amount: 0,
+  };
   const [transactionData, setTransactionData] = useState({
-    ...transaction,
+    ...defaultTransactionData,
   });
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  function onClick() {
-    if (allowClick) {
-      setOpen(true);
-    }
+  function onChange(e) {
+    const { name, value, checked, type } = e.target;
+    const val =
+      type === "checkbox" ? checked : type === "date" ? new Date(value) : value;
+    setTransactionData({ ...transactionData, [name]: val });
   }
 
-  function onChange(e) {
-    const { name, value, type } = e.target;
-    const val = type === "date" ? new Date(value) : value;
-    setTransactionData({ ...transactionData, [name]: val });
+  function onPlayersSelect(e) {
+    const selectedOnes = Object.values(e.target.selectedOptions).map(
+      (opt) => opt.value
+    );
   }
 
   function onCancel() {
     setTransactionData({
-      ...transaction,
+      ...defaultTransactionData,
     });
     setOpen(false);
   }
 
   async function onSave() {
-    if (isNew) {
-      await createTransaction(transactionData);
-    } else {
-      await updateTransaction(transactionData);
-    }
+    await createBulkTransactions(selectedPlayers, transactionData);
     onCancel();
     router.refresh();
   }
 
-  async function onDelete() {
-    if (confirm("Are you sure ?")) {
-      await deleteTransaction(transaction.id);
-      router.refresh();
-    }
-  }
-
   return (
     <>
-      {isNew ? (
-        <div onClick={onClick} className={className}>
-          {children}
-        </div>
-      ) : (
-        <tr onClick={onClick} className={className}>
-          {children}
-        </tr>
-      )}
+      <div onClick={() => setOpen(true)} className={className}>
+        {children}
+      </div>
 
       {open && (
         <Modal open={open} showCloseButton={false} onClose={onCancel}>
-          {!isNew && (
-            <div className="basis-full mb-3 flex items-center justify-between">
-              <p className="text-xs text-gray-500">
-                Transaction Id: {transactionData.id}
-              </p>
-              <Button secondary onClick={onDelete} className="text-sm !py-1">
-                Delete Transaction
-              </Button>
-            </div>
-          )}
           <div className="grid grid-flow-row grid-cols-2 md:items-center text-center gap-2">
+            <select multiple onChange={onPlayersSelect} className="col-span-1">
+              {players
+                .filter((p) => p.is_active === true)
+                .map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+            </select>{" "}
+            <p className="text-xs text-gray-500 col-span-1">
+              {selectedPlayers.reduce((p) => p.name, "")}
+            </p>
             <Input
               name="created_at"
               value={

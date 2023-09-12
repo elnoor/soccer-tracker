@@ -1,6 +1,7 @@
 import { sql } from "@vercel/postgres";
 import LinkButton from "@/components/linkButton";
 import PlayerModal from "./home/playerModal";
+import BulkTransactionsModal from "./home/bulkTransactionsModal";
 import Link from "next/link";
 import { isAdmin } from "./auth/actions";
 import LogOutButton from "./auth/logOutButton";
@@ -23,7 +24,12 @@ export default async function Home() {
 
   return (
     <div className="w-full max-w-xl">
-      <TopBar duration={duration} rowCount={rows.length} isAdmin={_isAdmin} />
+      <TopBar
+        players={rows}
+        duration={duration}
+        rowCount={rows.length}
+        isAdmin={_isAdmin}
+      />
       <div className="bg-white/30 shadow-xl ring-1 ring-gray-900/5 rounded-lg">
         <div className="divide-y divide-gray-900/5">
           {rows.map((player, index) => (
@@ -66,10 +72,12 @@ export default async function Home() {
 }
 
 async function TopBar({
+  players,
   rowCount,
   duration,
   isAdmin,
 }: {
+  players: any;
   rowCount: number;
   duration: number;
   isAdmin: any;
@@ -78,9 +86,11 @@ async function TopBar({
     <div className="flex items-center justify-between py-2">
       {isAdmin ? (
         <>
-          <LinkButton href="/game" secondary className="text-sm !py-1">
-            New Game
-          </LinkButton>
+          <BulkTransactionsModal players={players}>
+            <Button secondary className="text-sm !py-1">
+              Bulk Transactions
+            </Button>
+          </BulkTransactionsModal>
           <PlayerModal
             player={{
               name: "",
@@ -90,7 +100,6 @@ async function TopBar({
               is_active: true,
             }}
             isNew={true}
-            className=""
           >
             <Button secondary className="text-sm !py-1">
               New Player

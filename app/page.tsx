@@ -32,7 +32,7 @@ export default async function Home() {
               className="flex px-4 py-3 hover:bg-gray-200 hover:cursor-pointer gap-3"
             >
               <Link
-                href={`/player/${player.id}`}
+                href={`/${player.id}`}
                 className={`${
                   !player.is_active && "opacity-30"
                 } w-full flex items-center justify-between`}
@@ -41,7 +41,7 @@ export default async function Home() {
                   <span className="text-sm text-gray-500">{index + 1}</span>
                   <span className="font-medium">{player.name}</span>
                   {player.is_guest && (
-                    <span className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-200 rounded-full gap-x-1">
+                    <span className="inline px-3 py-1 text-xs font-normal text-gray-500 bg-gray-200 rounded-full gap-x-1">
                       Guest
                     </span>
                   )}
@@ -100,7 +100,7 @@ async function TopBar({
         </>
       ) : (
         <>
-          <p className="space-y-1 text-sm text-gray-500">
+          <p className="text-sm text-gray-500">
             Fetched {rowCount} players in {duration}ms
           </p>
           <LinkButton href="/auth" secondary className="text-sm !py-1">

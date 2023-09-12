@@ -93,7 +93,10 @@ export default function TransactionModal({
           <div className="grid grid-flow-row grid-cols-2 md:items-center text-center gap-2">
             <Input
               name="created_at"
-              value={transactionData.created_at.toISOString().substring(0, 10)}
+              value={
+                transactionData.created_at &&
+                transactionData.created_at.toISOString().substring(0, 10)
+              }
               type="date"
               onChange={onChange}
               placeholder="Date"

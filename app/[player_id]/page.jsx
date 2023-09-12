@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { notFound } from "next/navigation";
-import { isAdmin } from "../../auth/actions";
+import { isAdmin } from "../auth/actions";
 
 export default async function Player({ params }) {
   const playerId = Number(params.player_id);

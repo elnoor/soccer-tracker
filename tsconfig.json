@@ -30,7 +30,7 @@
     ".next/types/**/*.ts",
     "components/Button.js",
     "lib/utils.js",
-    "app/player/[player_id]/page.jsx",
+    "app/[player_id]/page.jsx",
     "app/seed/page.jsx"
 , "app/auth/page.tsx", "app/auth/actions.js"  ],
   "exclude": ["node_modules"]

@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import LinkButton from "@/components/linkButton";
-import PlayerEditButton from "@/components/playerEditButton";
+import PlayerEditButton from "./playerModalButton";
 import Link from "next/link";
 import { isAdmin } from "./auth/actions";
 import LogOutButton from "./auth/logOutButton";

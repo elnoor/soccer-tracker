@@ -24,6 +24,7 @@ export default function TransactionModal({
     ...transaction,
   });
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   function onClick() {
@@ -43,9 +44,11 @@ export default function TransactionModal({
       ...transaction,
     });
     setOpen(false);
+    setLoading(false);
   }
 
   async function onSave() {
+    setLoading(true);
     let success;
     if (isNew) {
       const id = await createTransaction(transactionData);
@@ -54,6 +57,7 @@ export default function TransactionModal({
       success = await updateTransaction(transactionData);
     }
 
+    setLoading(false);
     checkResult(success, () => {
       onCancel();
       router.refresh();
@@ -134,6 +138,7 @@ export default function TransactionModal({
             <Button
               onClick={onSave}
               className="w-full"
+              loading={loading}
               disabled={
                 !(transactionData.amount || transactionData.amount === 0) ||
                 !transactionData.note ||

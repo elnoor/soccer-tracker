@@ -17,6 +17,7 @@ export default function PlayerModal({
 }) {
   const [open, setOpen] = useState(false);
   const [playerData, setPlayerData] = useState({ ...player });
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   function onChange(e) {
@@ -28,9 +29,11 @@ export default function PlayerModal({
   function onCancel() {
     setPlayerData({ ...player });
     setOpen(false);
+    setLoading(false);
   }
 
   async function onSave() {
+    setLoading(true);
     let success;
     if (isNew) {
       const id = await createPlayer(playerData);
@@ -39,6 +42,7 @@ export default function PlayerModal({
       success = await updatePlayer(playerData);
     }
 
+    setLoading(false);
     checkResult(success, () => {
       onCancel();
       router.refresh();
@@ -131,6 +135,7 @@ export default function PlayerModal({
             <Button
               onClick={onSave}
               className="w-full"
+              loading={loading}
               disabled={
                 !playerData.name || !playerData.email || !playerData.phone
               }

@@ -25,6 +25,7 @@ export default function BulkTransactionsModal({
   });
   const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const indexedPlayers = useMemo(() => {
@@ -48,13 +49,16 @@ export default function BulkTransactionsModal({
       ...defaultTransactionData,
     });
     setOpen(false);
+    setLoading(false);
   }
 
   async function onSave() {
+    setLoading(true);
     const success = await createBulkTransactions(
       selectedPlayerIds,
       transactionData
     );
+    setLoading(false);
     checkResult(success, () => {
       onCancel();
       router.refresh();
@@ -131,6 +135,7 @@ export default function BulkTransactionsModal({
             <Button
               onClick={onSave}
               className="w-full"
+              loading={loading}
               disabled={
                 !(transactionData.amount || transactionData.amount === 0) ||
                 !transactionData.note ||

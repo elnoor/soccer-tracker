@@ -1,4 +1,4 @@
-import { sql } from "@vercel/postgres";
+import { db } from "@vercel/postgres";
 
 /**
  * If "players" table doesn't exist, it will create table
@@ -7,15 +7,16 @@ import { sql } from "@vercel/postgres";
  * If "transactions" table exists and has no rows, it will insert new rows.
  */
 export default async function Seed() {
+  const client = await db.connect(); // uses same client for muliple sql queries
   const logs = [];
 
   let players;
   try {
-    players = await sql`SELECT * FROM players`; // check if "players" table already exists
+    players = await client.sql`SELECT * FROM players`; // check if "players" table already exists
     logMessage(logs, 'Table "players" already exists.');
   } catch (e) {
     if (e.message.endsWith(`relation "players" does not exist`)) {
-      await sql`
+      await client.sql`
         CREATE TABLE IF NOT EXISTS players (
             id SERIAL PRIMARY KEY,
             name VARCHAR (255) UNIQUE NOT NULL,
@@ -27,7 +28,7 @@ export default async function Seed() {
         );
         `;
       logMessage(logs, `Created "players" table.`);
-      players = await sql`SELECT * FROM players`;
+      players = await client.sql`SELECT * FROM players`;
     } else {
       throw e;
     }
@@ -40,7 +41,7 @@ export default async function Seed() {
     );
   } else {
     const playersInserted = await Promise.all([
-      sql`
+      client.sql`
         INSERT INTO players (name, is_active, is_guest, email, phone)
         VALUES 
             ('Elnur', true, false, 'elnoormobile@gmail.com', '11111'),
@@ -59,11 +60,11 @@ export default async function Seed() {
 
   let transactions;
   try {
-    transactions = await sql`SELECT * FROM transactions`; // check if "transactions" table already exists
+    transactions = await client.sql`SELECT * FROM transactions`; // check if "transactions" table already exists
     logMessage(logs, `Table "transactions" already exists.`);
   } catch (e) {
     if (e.message.endsWith(`relation "transactions" does not exist`)) {
-      await sql`
+      await client.sql`
             CREATE TABLE IF NOT EXISTS transactions (
                 id SERIAL PRIMARY KEY,
                 player_id INT NOT NULL,
@@ -73,7 +74,7 @@ export default async function Seed() {
               );
         `;
       logMessage(logs, `Created "transactions" table.`);
-      transactions = await sql`SELECT * FROM transactions`;
+      transactions = await client.sql`SELECT * FROM transactions`;
     } else throw e;
   }
 
@@ -84,7 +85,7 @@ export default async function Seed() {
     );
   } else {
     const transactionsInserted = await Promise.all([
-      sql`
+      client.sql`
         INSERT INTO transactions (player_id, amount, note)
         VALUES 
             (1, -12.95, 'test - game from thursday 24th sep'),

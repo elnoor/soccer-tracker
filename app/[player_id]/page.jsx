@@ -1,4 +1,4 @@
-import { sql } from "@vercel/postgres";
+import { db } from "@vercel/postgres";
 import { notFound } from "next/navigation";
 import { isAdmin } from "../auth/actions";
 import TransactionModal from "./transactionModal.jsx";
@@ -6,8 +6,9 @@ import Button from "@/components/button";
 
 export default async function PlayerTransactions({ params }) {
   const playerId = Number(params.player_id);
+  const client = await db.connect();  // uses same client for muliple sql queries
 
-  let playerData = await sql`SELECT name FROM players WHERE id=${playerId}`;
+  let playerData = await client.sql`SELECT name FROM players WHERE id=${playerId}`;
   const player = playerData?.rows?.[0];
 
   if (!player) {
@@ -15,7 +16,7 @@ export default async function PlayerTransactions({ params }) {
   }
 
   let transactionsData =
-    await sql`SELECT * FROM transactions WHERE player_id=${playerId} order by id desc`;
+    await client.sql`SELECT * FROM transactions WHERE player_id=${playerId} order by id desc`;
   const transactions = transactionsData.rows;
 
   const _isAdmin = await isAdmin();

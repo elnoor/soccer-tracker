@@ -20,7 +20,7 @@ export async function isAdmin() {
  */
 export async function checkPasswordAndSave(password) {
   if (password && process.env.ADMIN_PASSWORD === password) {
-    cookies().set(cookieName, password);
+    cookies().set(cookieName, password, { secure: true });
     return true;
   }
   return false;

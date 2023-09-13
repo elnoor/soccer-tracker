@@ -17,7 +17,7 @@ export default function TransactionModal({
   isNew,
   children,
   className = "",
-  allowClick = true,
+  enabled = true,
 }) {
   const [transactionData, setTransactionData] = useState({
     ...transaction,
@@ -26,7 +26,7 @@ export default function TransactionModal({
   const router = useRouter();
 
   function onClick() {
-    if (allowClick) {
+    if (enabled) {
       setOpen(true);
     }
   }
@@ -101,6 +101,7 @@ export default function TransactionModal({
             <Input
               name="amount"
               value={transactionData.amount}
+              type="number"
               onChange={onChange}
               placeholder="Amount"
               required={true}

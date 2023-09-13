@@ -39,7 +39,7 @@ export default async function PlayerTransactions({ params }) {
               note: "",
               amount: 0,
             }}
-            allowClick={true}
+            enabled={true}
           >
             <Button secondary className="text-sm !py-1">
               New Transaction
@@ -63,7 +63,7 @@ export default async function PlayerTransactions({ params }) {
                 key={t.id}
                 transaction={t}
                 isNew={false}
-                allowClick={_isAdmin}
+                enabled={_isAdmin}
                 className="text-gray-500 hover:text-gray-700 hover:bg-gray-200 hover:cursor-pointer"
               >
                 <td className="p-2 pl-3 text-sm">

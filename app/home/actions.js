@@ -1,6 +1,6 @@
 "use server";
 
-import { sql } from "@vercel/postgres";
+import { sql, db } from "@vercel/postgres";
 
 export async function createPlayer(player) {
   const result =
@@ -26,13 +26,13 @@ export async function deletePlayer(playerId) {
   await sql`DELETE FROM players WHERE id=${playerId}`;
 }
 
-export async function createBulkTransactions(players, transaction) {
-    // await sql`UPDATE players
-  //           SET
-  //             name = ${player.name},
-  //             email = ${player.email},
-  //             phone = ${player.phone},
-  //             is_active = ${player.is_active},
-  //             is_guest = ${player.is_guest}
-  //           WHERE id=${player.id}`;
+export async function createBulkTransactions(playerIds, transaction) {
+  // @vercel/postgres package doesn't allow to build sql query dynamically with a loop. So, need to insert one-by-one.
+  // Since multiple queries will be run, create a single client to run them. See https://vercel.com/docs/storage/vercel-postgres/sdk#db
+  const client = await db.connect();
+
+  playerIds.forEach(async (pid) => {
+    await client.sql`INSERT INTO transactions (player_id, created_at, amount, note)
+    VALUES (${pid}, ${transaction.created_at}, ${transaction.amount}, ${transaction.note})`;
+  });
 }

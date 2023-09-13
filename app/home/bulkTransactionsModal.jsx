@@ -67,6 +67,7 @@ export default function BulkTransactionsModal({
               multiple
               onChange={(ids) => setSelectedPlayerIds(ids)}
               className="col-span-2 md:col-span-1"
+              required={true}
             >
               {Object.keys(indexedPlayers).map((id) => (
                 <option key={id} value={id}>
@@ -75,7 +76,9 @@ export default function BulkTransactionsModal({
               ))}
             </Select>
             <p className="text-sm text-gray-500 col-span-2 md:col-span-1">
-              {selectedPlayerIds.map((i) => indexedPlayers[i]).join(", ")}
+              {selectedPlayerIds.length === 0
+                ? "No selected player"
+                : selectedPlayerIds.map((i) => indexedPlayers[i]).join(", ")}
             </p>
             <Input
               name="created_at"
@@ -92,6 +95,7 @@ export default function BulkTransactionsModal({
             <Input
               name="amount"
               value={transactionData.amount}
+              type="number"
               onChange={onChange}
               placeholder="Amount"
               required={true}

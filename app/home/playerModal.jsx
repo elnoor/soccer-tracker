@@ -7,6 +7,7 @@ import Input from "../../components/input";
 import CheckBox from "../../components/checkbox";
 import Button from "../../components/button";
 import { createPlayer, deletePlayer, updatePlayer } from "./actions";
+import { checkResult } from "@/lib/utils";
 
 export default function PlayerModal({
   player,
@@ -30,22 +31,30 @@ export default function PlayerModal({
   }
 
   async function onSave() {
+    let success;
     if (isNew) {
-      await createPlayer(playerData);
+      const id = await createPlayer(playerData);
+      success = id > -1;
     } else {
-      await updatePlayer(playerData);
+      success = await updatePlayer(playerData);
     }
-    onCancel();
-    router.refresh();
+
+    checkResult(success, () => {
+      onCancel();
+      router.refresh();
+    });
   }
 
   async function onDelete() {
     const playerName = prompt(
       `If you are sure to delete, type name "${player.name}" below to confirm:`
     );
-    if (playerName === player.name) {
-      await deletePlayer(player.id);
-      router.refresh();
+    if (
+      playerName &&
+      playerName.toLocaleLowerCase() === player.name.toLocaleLowerCase()
+    ) {
+      const success = await deletePlayer(player.id);
+      checkResult(success, () => router.refresh());
     } else if (playerName) {
       alert("Entered named didn't match player's name!");
     }

@@ -11,6 +11,7 @@ import {
   deleteTransaction,
   updateTransaction,
 } from "./actions";
+import { checkResult } from "@/lib/utils";
 
 export default function TransactionModal({
   transaction,
@@ -45,19 +46,24 @@ export default function TransactionModal({
   }
 
   async function onSave() {
+    let success;
     if (isNew) {
-      await createTransaction(transactionData);
+      const id = await createTransaction(transactionData);
+      success = id > -1;
     } else {
-      await updateTransaction(transactionData);
+      success = await updateTransaction(transactionData);
     }
-    onCancel();
-    router.refresh();
+
+    checkResult(success, () => {
+      onCancel();
+      router.refresh();
+    });
   }
 
   async function onDelete() {
     if (confirm("Are you sure ?")) {
-      await deleteTransaction(transaction.id);
-      router.refresh();
+      const success = await deleteTransaction(transaction.id);
+      checkResult(success, () => router.refresh());
     }
   }
 

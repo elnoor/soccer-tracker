@@ -8,6 +8,7 @@ import Select from "../../components/select";
 import TextArea from "../../components/textarea";
 import Button from "../../components/button";
 import { createBulkTransactions } from "./actions";
+import { checkResult } from "@/lib/utils";
 
 export default function BulkTransactionsModal({
   players,
@@ -49,9 +50,14 @@ export default function BulkTransactionsModal({
   }
 
   async function onSave() {
-    await createBulkTransactions(selectedPlayerIds, transactionData);
-    onCancel();
-    router.refresh();
+    const success = await createBulkTransactions(
+      selectedPlayerIds,
+      transactionData
+    );
+    checkResult(success, () => {
+      onCancel();
+      router.refresh();
+    });
   }
 
   return (

@@ -1,6 +1,6 @@
 "use server";
 
-import { sql, db } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 
 export async function createPlayer(player) {
   const result =
@@ -27,12 +27,11 @@ export async function deletePlayer(playerId) {
 }
 
 export async function createBulkTransactions(playerIds, transaction) {
-  // @vercel/postgres package doesn't allow to build sql query dynamically with a loop. So, need to insert one-by-one.
-  // Since multiple queries will be run, create a single client to run them. See https://vercel.com/docs/storage/vercel-postgres/sdk#db
-  const client = await db.connect();
+  const arr = playerIds.map((pid) => ({ ...transaction, player_id: pid }));
 
-  playerIds.forEach(async (pid) => {
-    await client.sql`INSERT INTO transactions (player_id, created_at, amount, note)
-    VALUES (${pid}, ${transaction.created_at}, ${transaction.amount}, ${transaction.note})`;
-  });
+  sql.query(
+    `INSERT INTO transactions (player_id, amount, note, created_at)
+      SELECT player_id, amount, note, created_at FROM json_populate_recordset(NULL::transactions, $1)`,
+    [JSON.stringify(arr)]
+  );
 }

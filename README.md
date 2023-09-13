@@ -19,7 +19,8 @@ The app has an extremely simple cookie-based authentication that allows a single
 Once authenticated, go to `/seed` path in order to create `players` and `transactions` tables and some dummy records in them.
 
 ### Features
- - View/add/edit/delete players. A player can be flagged as "Guest". Past players can be flagged as not "Active".
- - View/add/edit/delete transactions. Transactions are used to track a player's balance.
- - Bulk transactions: same transaction can be added for multiple/selected users.
+ - Players can view their balances and transactions.
+ - Admin can view/add/edit/delete players. A player can be flagged as "Guest". Past players can be flagged as not "Active".
+ - Admin can view/add/edit/delete transactions which are used to track a player's balance.
+ - Bulk transactions: same transaction can be added for multiple users.
 

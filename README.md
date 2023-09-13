@@ -21,5 +21,5 @@ Once authenticated, go to `/seed` path in order to create `players` and `transac
 ### Features
  - View/add/edit/delete players. A player can be flagged as "Guest". Past players can be flagged as not "Active".
  - View/add/edit/delete transactions. Transactions are used to track a player's balance.
- - Bulk transactions: a same transaction can be added for multiple/selected users.
+ - Bulk transactions: same transaction can be added for multiple/selected users.
 

@@ -43,6 +43,7 @@ export default function BulkTransactionsModal({
   }
 
   function onCancel() {
+    setSelectedPlayerIds([]);
     setTransactionData({
       ...defaultTransactionData,
     });
@@ -84,7 +85,9 @@ export default function BulkTransactionsModal({
             <p className="text-sm text-gray-500 col-span-2 md:col-span-1">
               {selectedPlayerIds.length === 0
                 ? "No selected player"
-                : selectedPlayerIds.map((i) => indexedPlayers[i]).join(", ")}
+                : `${selectedPlayerIds.length}: ${selectedPlayerIds
+                    .map((i) => indexedPlayers[i])
+                    .join(", ")}`}
             </p>
             <Input
               name="created_at"

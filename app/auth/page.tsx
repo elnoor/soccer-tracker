@@ -4,7 +4,7 @@ import { isAdmin, checkPasswordAndSave } from "./actions";
 
 export default async function Login() {
   if (await isAdmin()) {
-    notFound();
+    notFound(); // already logged in
   }
 
   async function submitPassword(formData: FormData) {
@@ -23,9 +23,7 @@ export default async function Login() {
         required={true}
         className="bg-white text-gray-700 border focus:border-teal-500 rounded-full px-4 py-2 focus:outline-none focus:ring focus:ring-teal-200 focus:ring-opacity-40"
       />
-      <Button type="submit">
-        Enter
-      </Button>
+      <Button type="submit">Enter</Button>
     </form>
   );
 }

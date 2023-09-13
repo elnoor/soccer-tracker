@@ -1,12 +1,20 @@
 import { db } from "@vercel/postgres";
+import { isAdmin } from "../auth/actions";
+import { notFound } from "next/navigation";
 
 /**
+ * Only admin can run seeding. So, first go to /auth and log in as admin;
+ * Then go to /seed to run seeding.
+ *
  * If "players" table doesn't exist, it will create table
  * If "players" table exists and has no rows, it will insert new rows.
  * If "transactions" table doesn't exist, it will create table
  * If "transactions" table exists and has no rows, it will insert new rows.
  */
 export default async function Seed() {
+  if (!(await isAdmin())) {
+    notFound();
+  }
   const client = await db.connect(); // uses same client for muliple sql queries
   const logs = [];
 
@@ -44,12 +52,9 @@ export default async function Seed() {
       client.sql`
         INSERT INTO players (name, is_active, is_guest, email, phone)
         VALUES 
-            ('Elnur', true, false, 'elnoormobile@gmail.com', '11111'),
-            ('Elnar', true, false, 'elnoormobile+1@gmail.com', '22222'),
-            ('Kamran', true, true, 'elnoormobile+2@gmail.com', '3333333'),
-            ('Tural Q', false, false, 'elnoormobile+3@gmail.com', '4444444'),
-            ('Tural M', true, true, 'elnoormobile+4@gmail.com', '5555555'),
-            ('Riyad', false, true, 'elnoormobile+5@gmail.com', '6666666')
+            ('Elnur', true, false, 'elnur@mail.test1', '11111'),
+            ('Elnar', true, false, 'elnar@mail.test1', '22222'),
+            ('Riyad', false, true, 'riyad@mail.test1', '33333')
     `,
     ]);
     logMessage(
@@ -88,23 +93,17 @@ export default async function Seed() {
       client.sql`
         INSERT INTO transactions (player_id, amount, note)
         VALUES 
-            (1, -12.95, 'test - game from thursday 24th sep'),
-            (1, 17.35, 'test - payment'),
-            (1, -5, 'test - new ball purchased'),
-            (2, 40, 'test - balance increased'),
-            (2, -12.95, 'test - game from thursday 24th sep'),
-            (2, 17.35, 'test - payment'),
-            (2, -5, 'test - new ball purchased'),
-            (3, -12.95, 'test - game from thursday 24th sep'),
-            (3, 17.35, 'test - payment'),
-            (3, -5, 'test - new ball purchased'),
-            (3, 40, 'test - balance increased'),
-            (4, -12.95, 'test - game from thursday 24th sep'),
-            (4, 17.35, 'test - payment'),
-            (4, 40, 'test - balance increased'),
-            (4, 17.35, 'test - payment'),
-            (4, -5, 'test - new ball purchased'),
-            (5, 40, 'test - balance increased')
+            (1, -12.95, 'seeding - game from thursday 24th sep'),
+            (1, 17.35, 'seeding - payment'),
+            (1, -5, 'seeding - new ball purchased'),
+            (2, 40, 'seeding - balance increased'),
+            (2, -12.95, 'seeding - game from thursday 24th sep'),
+            (2, 17.35, 'seeding - payment'),
+            (2, -5, 'seeding - new ball purchased'),
+            (3, -12.95, 'seeding - game from thursday 24th sep'),
+            (3, 17.35, 'seeding - payment'),
+            (3, -5, 'seeding - new ball purchased'),
+            (3, 40, 'seeding - balance increased')
         `,
     ]);
     logMessage(

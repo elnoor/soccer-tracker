@@ -1,5 +1,5 @@
 # Soccer Tracker
-A simple tracker app to manage and view expenses/payments for soccer games.
+A simple tracking app for organizing/viewing expenses and payments related to our casual soccer gatherings.
 
 ## https://soccercalgary.vercel.app
 

@@ -73,6 +73,7 @@ export default function PlayerModal({
             <Input
               name="name"
               value={playerData.name}
+              type="text"
               onChange={onChange}
               placeholder="Name"
               required={true}
@@ -81,6 +82,7 @@ export default function PlayerModal({
             <Input
               name="phone"
               value={playerData.phone}
+              type="tel"
               onChange={onChange}
               placeholder="Phone"
               required={true}
@@ -89,6 +91,7 @@ export default function PlayerModal({
             <Input
               name="email"
               value={playerData.email}
+              type="email"
               onChange={onChange}
               placeholder="Email"
               required={true}
@@ -116,10 +119,16 @@ export default function PlayerModal({
           </div>
 
           <div className="flex gap-2 mt-6">
-            <Button onClick={onSave} className="w-full">
+            <Button
+              onClick={onSave}
+              className="w-full"
+              disabled={
+                !playerData.name || !playerData.email || !playerData.phone
+              }
+            >
               Save
             </Button>
-            <Button secondary className="w-full" onClick={onCancel}>
+            <Button onClick={onCancel} secondary className="w-full">
               Cancel
             </Button>
           </div>

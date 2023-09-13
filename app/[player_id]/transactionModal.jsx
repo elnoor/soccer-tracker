@@ -123,7 +123,15 @@ export default function TransactionModal({
           </div>
 
           <div className="flex gap-2 mt-6">
-            <Button onClick={onSave} className="w-full">
+            <Button
+              onClick={onSave}
+              className="w-full"
+              disabled={
+                !(transactionData.amount || transactionData.amount === 0) ||
+                !transactionData.note ||
+                !transactionData.created_at
+              }
+            >
               Save
             </Button>
             <Button secondary className="w-full" onClick={onCancel}>

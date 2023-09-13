@@ -7,7 +7,7 @@ A simple tracking app for organizing/viewing expenses and payments related to ou
 We play soccer every week with friends. I am the one who usually organizes: booking fields, paying for bookings, buying new balls/pinnies etc. I used to have an Excel sheet to keep track of all the expenses and debts. Though I always craved for something simpler, so, here it is! A super simple soccer tracker app! P.S. actually this app is pretty generic and can be used for other purposes too.
 
 ### Stack
-Built using React, Next.js, Vercel, Postgres.
+Built using Tailwind, React, Next.js, Vercel, Postgres.
 
 I wanted to give a try to newer version of Next.js and Vercel's new serverless storage. Some of the things are new to me and I also wanted to do this quick, so the code may not be perfect.
 I used [Vercel Postgres Next.js Starter template](https://vercel.com/templates/next.js/postgres-starter) that uses [Vercel Postgres](https://vercel.com/postgres) as the database to accelarate the development.

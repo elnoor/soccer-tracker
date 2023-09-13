@@ -122,14 +122,15 @@ async function TopBar({
 }
 
 function BalanceBadge({ amount }: { amount: number }) {
-  const isNegative = amount < 0;
+  const color =
+    !amount || !Number(amount)
+      ? "text-gray-600 bg-neutral-200/60"
+      : amount < 0
+      ? "text-red-600 bg-red-100/60"
+      : "text-emerald-600 bg-emerald-100";
   return (
     <div
-      className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
-        isNegative
-          ? "text-red-600 bg-red-100/60"
-          : "text-emerald-600 bg-emerald-100/60"
-      } `}
+      className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${color}`}
     >
       <h2 className="text-sm font-normal">{amount || 0}</h2>
     </div>

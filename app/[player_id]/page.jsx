@@ -80,7 +80,11 @@ export default async function PlayerTransactions({ params }) {
                 </td>
                 <td
                   className={`p-2 ${
-                    t.amount < 0 ? "bg-red-100/60" : "bg-emerald-100/60"
+                    !t.amount || !Number(t.amount)
+                      ? ""
+                      : t.amount < 0
+                      ? "bg-red-100/60"
+                      : "bg-emerald-100"
                   }`}
                 >
                   {t.amount}

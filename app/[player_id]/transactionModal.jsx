@@ -112,9 +112,11 @@ export default function TransactionModal({
               placeholder="Amount"
               required={true}
               className={`col-span-1 ${
-                transactionData.amount < 0
+                !transactionData.amount || !Number(transactionData.amount)
+                  ? "!bg-neutral-200/60"
+                  : transactionData.amount < 0
                   ? "!bg-red-100/60"
-                  : "!bg-emerald-100/60"
+                  : "!bg-emerald-100"
               }`}
             />
             <TextArea

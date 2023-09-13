@@ -65,10 +65,15 @@ export default function TransactionModal({
   }
 
   async function onDelete() {
+    setLoading(true);
     if (confirm("Are you sure ?")) {
       const success = await deleteTransaction(transaction.id);
-      checkResult(success, () => router.refresh());
+      checkResult(success, () => {
+        onCancel();
+        router.refresh();
+      });
     }
+    setLoading(false);
   }
 
   return (
@@ -90,7 +95,12 @@ export default function TransactionModal({
               <p className="text-xs text-gray-500">
                 Transaction Id: {transactionData.id}
               </p>
-              <Button secondary onClick={onDelete} className="text-sm !py-1">
+              <Button
+                secondary
+                onClick={onDelete}
+                loading={loading}
+                className="text-sm !py-1"
+              >
                 Delete Transaction
               </Button>
             </div>

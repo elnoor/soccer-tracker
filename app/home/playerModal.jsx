@@ -50,6 +50,7 @@ export default function PlayerModal({
   }
 
   async function onDelete() {
+    setLoading(true);
     const playerName = prompt(
       `If you are sure to delete, type name "${player.name}" below to confirm:`
     );
@@ -58,10 +59,14 @@ export default function PlayerModal({
       playerName.toLocaleLowerCase() === player.name.toLocaleLowerCase()
     ) {
       const success = await deletePlayer(player.id);
-      checkResult(success, () => router.refresh());
+      checkResult(success, () => {
+        onCancel();
+        router.refresh();
+      });
     } else if (playerName) {
       alert("Entered named didn't match player's name!");
     }
+    setLoading(false);
   }
 
   return (
@@ -77,7 +82,12 @@ export default function PlayerModal({
               <p className="text-xs text-gray-500">
                 Created on {playerData.created_at.toLocaleDateString()}
               </p>
-              <Button secondary onClick={onDelete} className="text-sm !py-1">
+              <Button
+                secondary
+                onClick={onDelete}
+                loading={loading}
+                className="text-sm !py-1"
+              >
                 Delete Player
               </Button>
             </div>

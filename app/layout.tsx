@@ -28,6 +28,16 @@ export default function RootLayout({
         <main className="mx-auto p-2 flex flex-col items-center justify-center">
           {children}
         </main>
+        <footer className="text-sm text-center pt-2 pb-3 text-gray-500">
+          elnoor was{" "}
+          <Link
+            href="https://github.com/elnoor/soccer-tracker"
+            className="underline"
+            target="_blank"
+          >
+            here
+          </Link>
+        </footer>
       </body>
     </html>
   );

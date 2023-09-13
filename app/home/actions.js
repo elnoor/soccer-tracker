@@ -46,6 +46,8 @@ export async function deletePlayer(playerId) {
 }
 
 export async function createBulkTransactions(playerIds, transaction) {
+  if (!playerIds || playerIds.length === 0) return false;
+
   try {
     const arr = playerIds.map((pid) => ({ ...transaction, player_id: pid }));
 

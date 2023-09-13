@@ -38,7 +38,7 @@ export default function BulkTransactionsModal({
 
   function onChange(e) {
     const { name, value, type } = e.target;
-    const val = type === "date" ? new Date(value) : value;
+    const val = type === "date" && value ? new Date(value) : value;
     setTransactionData({ ...transactionData, [name]: val });
   }
 
@@ -123,7 +123,16 @@ export default function BulkTransactionsModal({
           </div>
 
           <div className="flex gap-2 mt-6">
-            <Button onClick={onSave} className="w-full">
+            <Button
+              onClick={onSave}
+              className="w-full"
+              disabled={
+                !(transactionData.amount || transactionData.amount === 0) ||
+                !transactionData.note ||
+                !transactionData.created_at ||
+                selectedPlayerIds.length === 0
+              }
+            >
               Save
             </Button>
             <Button secondary className="w-full" onClick={onCancel}>

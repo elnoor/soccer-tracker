@@ -34,7 +34,7 @@ export default function TransactionModal({
 
   function onChange(e) {
     const { name, value, type } = e.target;
-    const val = type === "date" ? new Date(value) : value;
+    const val = type === "date" && value ? new Date(value) : value;
     setTransactionData({ ...transactionData, [name]: val });
   }
 

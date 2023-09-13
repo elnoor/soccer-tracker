@@ -6,7 +6,7 @@ import Button from "@/components/button";
 
 export default async function PlayerTransactions({ params }) {
   const playerId = Number(params.player_id);
-  const client = await db.connect();  // uses same client for muliple sql queries
+  const client = await db.connect();  // uses same client (connection) for multiple sql queries
 
   let playerData = await client.sql`SELECT name FROM players WHERE id=${playerId}`;
   const player = playerData?.rows?.[0];

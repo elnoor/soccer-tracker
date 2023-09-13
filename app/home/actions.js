@@ -1,6 +1,6 @@
 "use server";
 
-import { sql } from "@vercel/postgres";
+import { sql, db } from "@vercel/postgres";
 
 export async function createPlayer(player) {
   try {
@@ -35,7 +35,9 @@ export async function updatePlayer(player) {
 
 export async function deletePlayer(playerId) {
   try {
-    await sql`DELETE FROM players WHERE id=${playerId}`;
+    const client = await db.connect(); // uses same client (connection) for multiple sql queries
+    await client.sql`DELETE FROM players WHERE id=${playerId}`;
+    await client.sql`DELETE FROM transactions WHERE player_id=${playerId}`;
     return true;
   } catch (e) {
     console.log("Error deleting user:", e);

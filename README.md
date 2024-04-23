@@ -13,7 +13,7 @@ I wanted to give a try to newer version of Next.js and Vercel's new serverless s
 I used [Vercel Postgres Next.js Starter template](https://vercel.com/templates/next.js/postgres-starter) that uses [Vercel Postgres](https://vercel.com/postgres) as the database to accelarate the development.
 
 ### Auth
-The app has an extremely simple cookie-based authentication that allows a single user to "log in". The actual password is stored as an environment variable with name `ADMIN_PASSWORD`. One can go to `/auth` path in order to enter password and authenticate. Once the password is entered, it will be matched agains the one stored in environment variables and if matched a cookie will be created.
+The app has an extremely simple cookie-based authentication that allows a single user to "log in". The actual password is stored as an environment variable with name `ADMIN_PASSWORD`. One can go to `/auth` path in order to enter password and authenticate. Once the password is entered, it will be matched against the one stored in environment variables and if matched a cookie will be created.
 
 ### Seeding
 Once authenticated, go to `/seed` path in order to create `players` and `transactions` tables and some dummy records in them.

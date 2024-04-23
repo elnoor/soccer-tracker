@@ -15,7 +15,7 @@ export default async function Seed() {
   if (!(await isAdmin())) {
     notFound();
   }
-  const client = await db.connect(); // uses same client for muliple sql queries
+  const client = await db.connect(); // uses same client for multiple sql queries
   const logs = [];
 
   let players;

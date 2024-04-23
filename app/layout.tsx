@@ -19,6 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta property="og:image" content={`${process.env.WEBSITE_URL}/api/og`} />
+      </head>
       <body className={`${inter.variable} min-h-screen`}>
         <header className="pt-2 pb-4 text-center">
           <Link

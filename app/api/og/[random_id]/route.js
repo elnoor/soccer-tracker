@@ -1,8 +1,11 @@
 import { ImageResponse } from '@vercel/og';
 import { sql } from "@vercel/postgres";
 
-// see how this endpoint has been used in the manifest of page.tsx (Default/Home) for og meta tag
-export async function GET() {
+// see how this endpoint has been used in the manifest (metadata) of page.tsx (Default/Home) for og meta tag
+// param (random_id) is actually not used, only helps with caching. Without it, the returned image is same/cached. With param, url becomes unique.
+export async function GET(request, context) {  
+  console.log("random_id:", context.params.random_id);
+
   try {
     let data = await sql`
       SELECT p.name, SUM (t.amount) AS balance 

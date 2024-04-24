@@ -9,7 +9,7 @@ import Button from "@/components/button";
 
 export const metadata = {
   openGraph: {
-    images: `${process.env.WEBSITE_URL}/api/og`,
+    images: `${process.env.WEBSITE_URL}/api/og/${Math.random() * 100}`,
   },
 }
 

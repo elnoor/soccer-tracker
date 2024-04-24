@@ -31,9 +31,9 @@ export async function GET() {
             flexDirection: 'column'
           }}
         >
-          {rows.length && rows.length && rows.map((r) => {
+          {rows.length && rows.length && rows.map((r, index) => {
             return (
-              <div style={{ display: "flex", width: "100%" }}>
+              <div style={{ display: "flex", width: "100%" }} key={index}>
                 <div style={{ width: "60%" }}>{r.name}</div>
                 <div style={{ color: r.balance < 0 ? "red" : "green" }}>{r.balance}</div>
               </div>

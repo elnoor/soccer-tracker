@@ -63,7 +63,7 @@ export async function GET() {
             textAlign: 'center'
           }}
         >
-          OG image couldn't be generated!
+          OG image could not be generated!
         </div>
       ),
       {

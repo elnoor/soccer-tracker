@@ -10,6 +10,7 @@ import Button from "@/components/button";
 export const metadata = {
   openGraph: {
     images: `${process.env.WEBSITE_URL}/api/og/${Math.random() * 100}`,
+    updatedTime: Math.floor((new Date().getTime()) / 1000)
   },
 }
 

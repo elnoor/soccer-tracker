@@ -7,6 +7,12 @@ import { isAdmin } from "./auth/actions";
 import LogOutButton from "./auth/logOutButton";
 import Button from "@/components/button";
 
+export const metadata = {
+  openGraph: {
+    images: `${process.env.WEBSITE_URL}/api/og`,
+  },
+}
+
 export default async function Home() {
   let startTime = Date.now();
   let data = await sql`
@@ -39,9 +45,8 @@ export default async function Home() {
             >
               <Link
                 href={`/${player.id}`}
-                className={`${
-                  !player.is_active && "opacity-30"
-                } w-full flex items-center justify-between`}
+                className={`${!player.is_active && "opacity-30"
+                  } w-full flex items-center justify-between`}
               >
                 <div className="flex items-center space-x-4 leading-none">
                   <span className="text-sm text-gray-500">{index + 1}</span>
@@ -126,8 +131,8 @@ function BalanceBadge({ amount }: { amount: number }) {
     !amount || !Number(amount)
       ? "text-gray-600 bg-neutral-200/60"
       : amount < 0
-      ? "text-red-600 bg-red-100/60"
-      : "text-emerald-600 bg-emerald-100";
+        ? "text-red-600 bg-red-100/60"
+        : "text-emerald-600 bg-emerald-100";
   return (
     <div
       className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${color}`}

@@ -1,6 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import { sql } from "@vercel/postgres";
 
+// see how this endpoint has been used in layout.jsx for og meta tag
 export async function GET() {
   try {
     let data = await sql`

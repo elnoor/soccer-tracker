@@ -53,6 +53,12 @@ export default function BulkTransactionsModal({
   }
 
   async function onSave() {
+    let ok = true;
+    if (transactionData.amount > 0)
+      ok = confirm("Is this really a credit ? If you meant to charge, make it a negative number!");
+
+    if (!ok) return;
+
     setLoading(true);
     const success = await createBulkTransactions(
       selectedPlayerIds,
@@ -90,8 +96,8 @@ export default function BulkTransactionsModal({
               {selectedPlayerIds.length === 0
                 ? "No selected player"
                 : `${selectedPlayerIds.length}: ${selectedPlayerIds
-                    .map((i) => indexedPlayers[i])
-                    .join(", ")}`}
+                  .map((i) => indexedPlayers[i])
+                  .join(", ")}`}
             </p>
             <Input
               name="created_at"
@@ -112,13 +118,12 @@ export default function BulkTransactionsModal({
               onChange={onChange}
               placeholder="Amount"
               required={true}
-              className={`col-span-1 ${
-                !transactionData.amount || !Number(transactionData.amount)
-                  ? "!bg-neutral-200/60"
-                  : transactionData.amount < 0
+              className={`col-span-1 ${!transactionData.amount || !Number(transactionData.amount)
+                ? "!bg-neutral-200/60"
+                : transactionData.amount < 0
                   ? "!bg-red-100/60"
                   : "!bg-emerald-100"
-              }`}
+                }`}
             />
             <TextArea
               name="note"

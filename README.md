@@ -23,4 +23,5 @@ Once authenticated, go to `/seed` path in order to create `players` and `transac
  - Admin can view/add/edit/delete players. A player can be flagged as "Guest". Past players can be flagged as not "Active".
  - Admin can view/add/edit/delete transactions which are used to track a player's balance.
  - Bulk transactions: same transaction can be added for multiple users.
+ - Meta `og:image` tag will be used to preview top few players with lowest balance. Check it at `.../api/og/randomValueToBypassCache`
 

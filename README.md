@@ -1,7 +1,7 @@
 # Soccer Tracker
 A simple tracking app for organizing/viewing expenses and payments related to our casual soccer gatherings.
 
-## https://soccercalgary.vercel.app
+## https://futbol25.vercel.app
 
 ### Story
 We play soccer every week with friends. I am the one who usually organizes: booking fields, paying for bookings, buying new balls/pinnies etc. I used to have an Excel sheet to keep track of all the expenses and debts. Though I always craved for something simpler, so, here it is! A super simple soccer tracker app! P.S. actually this app is pretty generic and can be used for other purposes too.
